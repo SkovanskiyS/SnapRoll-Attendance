@@ -89,15 +89,16 @@
                   </select>
                 </div>
               </div>
-              <button type="submit" class="btn btn-primary">Sign up</button>
+              <button type="submit" class="btn btn-primary" style="padding: 7px 26px;">Sign up</button>
             </form>
         </div>
       </div>
     </div>
     <div class="col-md-4">
         <video id="video" playsinline autoplay></video>
-        <button type="submit" class="btn btn-outline-success btn-lg">Take a shoot</button>
-        <button type="submit" class="btn btn-outline-danger btn-lg">Stop stream</button>
+        <button id="snap" type="submit" class="btn btn-outline-success btn-lg">Take a shoot</button>
+        <button id="stopButton" type="submit" class="btn btn-outline-danger btn-lg">Stop stream</button>
+        <a id="downloadButton" style="display: none">Download Image</a>
 
       <!-- <div class="col controller">
           <button id="snap">Capture</button>
@@ -121,6 +122,7 @@ const video = document.getElementById('video');
 const canvas = document.getElementById('canvas');
 const snap = document.getElementById("snap");
 const errorMsgElement = document.querySelector('span#errorMsg');
+
 
 const constraints = {
     audio: false,
@@ -148,12 +150,23 @@ function handleSuccess(stream) {
 // Load init
 init();
 
-// Draw image
 var context = canvas.getContext('2d');
-snap.addEventListener("click", function() {
-    context.drawImage(video, 0, 0, 640, 480);
-});
+var downloadButton = document.getElementById("downloadButton"); // Assuming you have a button with this ID in your HTML
 
+snap.addEventListener("click", function() {
+  video.pause()
+    context.drawImage(video, 5, 0, 640, 480);
+
+    // Convert the canvas content to a data URL 
+    var dataURL = canvas.toDataURL('image/png');
+
+    // Create a link for downloading
+    downloadButton.href = dataURL;
+    downloadButton.download = 'snapshot.png'; // You can customize the file name and extension
+
+    // Simulate a click on the download link to trigger the download
+    downloadButton.click();
+});
 
 const stopButton = document.getElementById('stopButton');
 
