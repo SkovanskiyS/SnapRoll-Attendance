@@ -1,14 +1,182 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>SnapRoll Authorization</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Registration Form</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+        <style>
+        #particles-js {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-color: #282c34;
+            z-index: -1;
+        }
+        #snaproll_txt {
+            font-weight: bold;
+            font-size: 75px;
+            }
+        #welcome_txt {
+          font-family: 'Roboto', sans-serif;
+          font-weight: 700;
+        }
+        video {
+          width: 800px;
+          height: 500px;
+        }
+    </style>
 </head>
 <body>
 
+<div class="container mt-5">
+  <div class="row">
+    <div class="col-md-">
+      <div class="justify-content-center" >
+        <div class="col-md-17" style="box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.3);padding: 20px;border-radius:10px;">
+            <h2 class="mb-4"><span id="welcome_txt">Welcome To </span><br><span id="snaproll_txt">SnapRoll</span></h2>
+            <form>
+              <div class="form-group">
+                <label for="inputFName">First Name</label>
+                <input type="text" class="form-control" id="inputFName" placeholder="Ex: Jakhongir" required>
+              </div>
+              <div class="form-row">
+                <div class="form-group col-md-6">
+                  <label for="inputLName">Last Name</label>
+                  <input type="text" class="form-control" id="inputLName" placeholder="Ex: Masharipov" required>
+                </div>
+                <div class="form-group col-md-6">
+                  <label for="inputMName">Middle Name</label>
+                  <input type="text" class="form-control" id="inputMName" placeholder="Ex: Alisher Og'li" required>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="inputEnrollment">Enrollment №</label>
+                <input type="text" class="form-control" id="inputEnrollment" placeholder="Ex: A85204923005" maxlength="12" required>
+              </div>
+              <div class="form-row">
+                <div class="form-group col-md-6">
+                  <label for="inputState">Faculty | Program</label>
+                  <select id="inputState" class="form-control" required>
+                    <option selected>B. Sc (IT)</option>
+                    <option>B. TECH (CSE)</option>
+                    <option>IFS</option>
+                    <option>BBA</option>
+                    <option>BA(TA)</option>
+                    <option>BA (H) Eco</option>
+                  </select>
+                </div>
+                <div class="form-group col-md-4">
+                  <label for="inputState">Semester</label>
+                  <select id="inputState" class="form-control" required>
+                    <option selected>1</option>
+                    <option>2</option>
+                    <option>3</option>
+                  </select>
+                </div>
+                <div class="form-group col-md-2">
+                  <label for="inputState">Section</label>
+                  <select id="inputState" class="form-control" required>
+                    <option selected>1</option>
+                    <option>2</option>
+                    <option>3</option>
+                    <option>4</option>
+                    <option>5</option>
+                    <option>6</option>
+                  </select>
+                </div>
+              </div>
+              <button type="submit" class="btn btn-primary">Sign up</button>
+            </form>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+        <video id="video" playsinline autoplay></video>
+        <button type="submit" class="btn btn-outline-success btn-lg">Take a shoot</button>
+        <button type="submit" class="btn btn-outline-danger btn-lg">Stop stream</button>
 
+      <!-- <div class="col controller">
+          <button id="snap">Capture</button>
+      </div>
+      <button id="stopButton">Stop Stream</button> -->
+    </div>
+  </div>
+    
+  
+
+</div>
+
+
+<canvas id="canvas" width="640" height="480"></canvas>
+
+
+<script>
+'use strict';
+
+const video = document.getElementById('video');
+const canvas = document.getElementById('canvas');
+const snap = document.getElementById("snap");
+const errorMsgElement = document.querySelector('span#errorMsg');
+
+const constraints = {
+    audio: false,
+    video: {
+        width: 1280, height: 720
+    }
+};
+
+// Access webcam
+async function init() {
+    try {
+        const stream = await navigator.mediaDevices.getUserMedia(constraints);
+        handleSuccess(stream);
+    } catch (e) {
+        errorMsgElement.innerHTML = `navigator.getUserMedia error:${e.toString()}`;
+    }
+}
+
+// Success
+function handleSuccess(stream) {
+    window.stream = stream;
+    video.srcObject = stream;
+}
+
+// Load init
+init();
+
+// Draw image
+var context = canvas.getContext('2d');
+snap.addEventListener("click", function() {
+    context.drawImage(video, 0, 0, 640, 480);
+});
+
+
+const stopButton = document.getElementById('stopButton');
+
+stopButton.addEventListener('click', stopStream);
+
+// Stop stream
+function stopStream() {
+    const stream = video.srcObject;
+    const tracks = stream.getTracks();
+
+    tracks.forEach(track => {
+        track.stop();
+    });
+
+    video.srcObject = null;
+}
+
+</script>
+
+<script type="text/javascript" src="https://unpkg.com/webcam-easy/dist/webcam-easy.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
 </body>
 </html>
