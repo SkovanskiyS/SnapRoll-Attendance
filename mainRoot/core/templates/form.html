@@ -1,34 +1,16 @@
 <!DOCTYPE html>
+{%load static%}
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Registration Form</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
-        <style>
-        #particles-js {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            background-color: #282c34;
-            z-index: -1;
-        }
-        #snaproll_txt {
-            font-weight: bold;
-            font-size: 75px;
-            }
-        #welcome_txt {
-          font-family: 'Roboto', sans-serif;
-          font-weight: 700;
-        }
-        video {
-          width: 800px;
-          height: 500px;
-        }
-    </style>
+
 </head>
 <body>
 
@@ -36,7 +18,7 @@
   <div class="row">
     <div class="col-md-">
       <div class="justify-content-center" >
-        <div class="col-md-17" style="box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.3);padding: 20px;border-radius:10px;">
+        <div class="col-md-17 content_col">
             <h2 class="mb-4"><span id="welcome_txt">Welcome To </span><br><span id="snaproll_txt">SnapRoll</span></h2>
             <form>
               <div class="form-group">
@@ -89,107 +71,55 @@
                   </select>
                 </div>
               </div>
+              <div class="row" style="margin-bottom:15px;">
+                <div class="col">
+                   <button type="button" onclick="openCamera()" class="btn btn-success">Register a face</button>
+                </div>
+                <div class="col">
+                    <div class="form-check" style="">
+                        <span style="padding: 0 10px"></span>
+                        <input class="form-check-input" type="checkbox" value="" id="defaultCheck2" disabled>
+                        <label class="form-check-label" for="defaultCheck2">
+                          Face registered
+                        </label>
+                    </div>
+                </div>
+              </div>
+
+
               <button type="submit" class="btn btn-primary" style="padding: 7px 26px;">Sign up</button>
+
             </form>
         </div>
       </div>
     </div>
-    <div class="col-md-4">
-        <video id="video" playsinline autoplay></video>
-        <button id="snap" type="submit" class="btn btn-outline-success btn-lg">Take a shoot</button>
-        <button id="stopButton" type="submit" class="btn btn-outline-danger btn-lg">Stop stream</button>
-        <a id="downloadButton" style="display: none">Download Image</a>
-
+    <div class="col-md-7">
+          <div>
+            <h1 style="text-align: center;">3D model of the face</h1>
+          </div>
       <!-- <div class="col controller">
           <button id="snap">Capture</button>
       </div>
       <button id="stopButton">Stop Stream</button> -->
     </div>
   </div>
-    
   
-
+  <div id="hiddenDiv">
+    <video id="video" playsinline autoplay></video>
+    <button id="snap" type="submit" class="btn btn-outline-success btn-lg">Take a shoot</button>
+    <button id="stopButton" type="button" onclick='closeCamera()' class="btn btn-outline-danger btn-lg">Stop stream</button>
+    <a id="downloadButton" style="display: none">Download Image</a>
+  </div>
 </div>
 
 
-<canvas id="canvas" width="640" height="480"></canvas>
-
-
-<script>
-'use strict';
-
-const video = document.getElementById('video');
-const canvas = document.getElementById('canvas');
-const snap = document.getElementById("snap");
-const errorMsgElement = document.querySelector('span#errorMsg');
-
-
-const constraints = {
-    audio: false,
-    video: {
-        width: 1280, height: 720
-    }
-};
-
-// Access webcam
-async function init() {
-    try {
-        const stream = await navigator.mediaDevices.getUserMedia(constraints);
-        handleSuccess(stream);
-    } catch (e) {
-        errorMsgElement.innerHTML = `navigator.getUserMedia error:${e.toString()}`;
-    }
-}
-
-// Success
-function handleSuccess(stream) {
-    window.stream = stream;
-    video.srcObject = stream;
-}
-
-// Load init
-init();
-
-var context = canvas.getContext('2d');
-var downloadButton = document.getElementById("downloadButton"); // Assuming you have a button with this ID in your HTML
-
-snap.addEventListener("click", function() {
-  video.pause()
-    context.drawImage(video, 5, 0, 640, 480);
-
-    // Convert the canvas content to a data URL 
-    var dataURL = canvas.toDataURL('image/png');
-
-    // Create a link for downloading
-    downloadButton.href = dataURL;
-    downloadButton.download = 'snapshot.png'; // You can customize the file name and extension
-
-    // Simulate a click on the download link to trigger the download
-    downloadButton.click();
-});
-
-const stopButton = document.getElementById('stopButton');
-
-stopButton.addEventListener('click', stopStream);
-
-// Stop stream
-function stopStream() {
-    const stream = video.srcObject;
-    const tracks = stream.getTracks();
-
-    tracks.forEach(track => {
-        track.stop();
-    });
-
-    video.srcObject = null;
-}
-
-</script>
+<canvas id="canvas" width="640" height="480" style="display:none;"></canvas>
 
 <script type="text/javascript" src="https://unpkg.com/webcam-easy/dist/webcam-easy.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<script src="{% static 'js/app.js' %}"></script>
 
 </body>
 </html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Animated Div Display</title>
+    <style>
+        /* Initial style for the hidden div */
+        #animatedDiv {
+            display: none;
+            width: 200px;
+            height: 200px;
+            background-color: #3498db;
+            color: #fff;
+            text-align: center;
+            line-height: 200px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            opacity: 0;
+            transition: opacity 0.5s, transform 0.5s;
+        }
+
+        /* Style for the visible div */
+        #animatedDiv.visible {
+            display: block;
+            opacity: 1;
+            transform: translate(-50%, -50%) scale(1);
+        }
+    </style>
+</head>
+<body>
+
+<!-- Button to trigger the animation -->
+<button onclick="toggleDiv()">Show/Hide Div</button>
+
+<!-- Animated Div -->
+<div id="animatedDiv">This is the animated div</div>
+
+<script>
+    function toggleDiv() {
+        var div = document.getElementById('animatedDiv');
+        div.classList.toggle('visible');
+    }
+</script>
+
+</body>
+</html>
