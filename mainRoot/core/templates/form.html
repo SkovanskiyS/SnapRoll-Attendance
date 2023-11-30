@@ -14,104 +14,122 @@
 </head>
 <body>
 
-<div class="container mt-5">
-  <div class="row">
-    <div class="col-md-">
-      <div class="justify-content-center" >
-        <div class="col-md-17 content_col">
-            <h2 class="mb-4"><span id="welcome_txt">Welcome To </span><br><span id="snaproll_txt">SnapRoll</span></h2>
-            <form>
-              <div class="form-group">
-                <label for="inputFName">First Name</label>
-                <input type="text" class="form-control" id="inputFName" placeholder="Ex: Jakhongir" required>
-              </div>
-              <div class="form-row">
-                <div class="form-group col-md-6">
-                  <label for="inputLName">Last Name</label>
-                  <input type="text" class="form-control" id="inputLName" placeholder="Ex: Masharipov" required>
-                </div>
-                <div class="form-group col-md-6">
-                  <label for="inputMName">Middle Name</label>
-                  <input type="text" class="form-control" id="inputMName" placeholder="Ex: Alisher Og'li" required>
-                </div>
-              </div>
-              <div class="form-group">
-                <label for="inputEnrollment">Enrollment №</label>
-                <input type="text" class="form-control" id="inputEnrollment" placeholder="Ex: A85204923005" maxlength="12" required>
-              </div>
-              <div class="form-row">
-                <div class="form-group col-md-6">
-                  <label for="inputState">Faculty | Program</label>
-                  <select id="inputState" class="form-control" required>
-                    <option selected>B. Sc (IT)</option>
-                    <option>B. TECH (CSE)</option>
-                    <option>IFS</option>
-                    <option>BBA</option>
-                    <option>BA(TA)</option>
-                    <option>BA (H) Eco</option>
-                  </select>
-                </div>
-                <div class="form-group col-md-4">
-                  <label for="inputState">Semester</label>
-                  <select id="inputState" class="form-control" required>
-                    <option selected>1</option>
-                    <option>2</option>
-                    <option>3</option>
-                  </select>
-                </div>
-                <div class="form-group col-md-2">
-                  <label for="inputState">Section</label>
-                  <select id="inputState" class="form-control" required>
-                    <option selected>1</option>
-                    <option>2</option>
-                    <option>3</option>
-                    <option>4</option>
-                    <option>5</option>
-                    <option>6</option>
-                  </select>
-                </div>
-              </div>
-              <div class="row" style="margin-bottom:15px;">
-                <div class="col">
-                   <button type="button" onclick="openCamera()" class="btn btn-success">Register a face</button>
-                </div>
-                <div class="col">
-                    <div class="form-check" style="">
-                        <span style="padding: 0 10px"></span>
-                        <input class="form-check-input" type="checkbox" value="" id="defaultCheck2" disabled>
-                        <label class="form-check-label" for="defaultCheck2">
-                          Face registered
-                        </label>
-                    </div>
-                </div>
-              </div>
+<div class="container mt-2">
+  <div class="justify-content-center" align="center">
+    <div class="col-md-5 content_col">
+        <h2 class="mb-4"><span id="welcome_txt">Welcome To </span><br><span id="snaproll_txt">SnapRoll</span></h2>
 
+<!--        {% csrf_token %}-->
 
-              <button type="submit" class="btn btn-primary" style="padding: 7px 26px;">Sign up</button>
+<!--        {%if submitted%}-->
+<!--        <h1>Thank you</h1>-->
+<!--        {%else%}-->
+<!--        <form onsubmit="return checkValidData()" method="POST" action="">-->
+<!--                {{ form.as_p }}-->
+<!--                <input type="submit" name="submit" id="" value="Submit">-->
+<!--        </form>-->
+<!--        {%endif%}-->
 
-            </form>
-        </div>
-      </div>
-    </div>
-    <div class="col-md-7">
-          <div>
-            <h1 style="text-align: center;">3D model of the face</h1>
+<!--        <button type="submit" value="Submit" class="btn btn-primary btn-block" style="padding: 7px 26px;">Sign up</button>-->
+        {% csrf_token %}
+        {%if submitted%}
+          <h2>You successfully registered!</h2>
+        {% else %}
+        <form onsubmit="return checkValidData()" method="POST" action="">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="inputUName">Username</label>
+              <input type="text" class="form-control" id="inputUName" placeholder="Ex: kovanskiy" name="username" required>
+            </div>
+            <div class="form-group col-md-">
+              <label for="inputPName">Password</label>
+              <input type="text" class="form-control" id="inputPName" placeholder="Ex: helloworld" name="password" required>
+            </div>
           </div>
-      <!-- <div class="col controller">
-          <button id="snap">Capture</button>
-      </div>
-      <button id="stopButton">Stop Stream</button> -->
+          <div class="form-group">
+            <label for="inputFName">First Name</label>
+            <input type="text" class="form-control" id="inputFName" placeholder="Ex: Jakhongir" name="f_name" required>
+          </div>
+          <div class="form-row">
+            <div class="form-group col-md-6">
+              <label for="inputLName">Last Name</label>
+              <input type="text" class="form-control" id="inputLName" placeholder="Ex: Masharipov" name="l_name" required>
+            </div>
+            <div class="form-group col-md-6">
+              <label for="inputMName">Middle Name</label>
+              <input type="text" class="form-control" id="inputMName" placeholder="Ex: Alisher Og'li" name="m_name" required>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="inputEnrollment">Enrollment №</label>
+            <input type="text" class="form-control" id="inputEnrollment" placeholder="Ex: A85204923005" name="enroll_number" maxlength="12" required>
+          </div>
+          <div class="form-row">
+            <div class="form-group col-md-6">
+              <label for="inputState">Faculty | Program</label>
+              <select id="inputState" class="form-control" name="faculty" required>
+                <option selected>B. Sc (IT)</option>
+                <option>B. TECH (CSE)</option>
+                <option>IFS</option>
+                <option>BBA</option>
+                <option>BA(TA)</option>
+                <option>BA (H) Eco</option>
+              </select>
+            </div>
+            <div class="form-group col-md-4">
+              <label for="inputState">Semester</label>
+              <select id="inputState" class="form-control" name="semester" required>
+                <option selected>1</option>
+                <option>2</option>
+                <option>3</option>
+              </select>
+            </div>
+            <div class="form-group col-md-2">
+              <label for="inputState">Section</label>
+              <select id="inputState" class="form-control" name="section" required>
+                <option selected>1</option>
+                <option>2</option>
+                <option>3</option>
+                <option>4</option>
+                <option>5</option>
+                <option>6</option>
+              </select>
+            </div>
+          </div>
+<!--          <input type="file" id="imageDataInput" name="face">-->
+          <input type="hidden" id="imageDataInput" name="face">
+          <div class="row" style="margin-bottom:15px;">
+            <div class="col-md-auto">
+                <button type="button" onclick="openCamera()" class="btn btn-success">Register a face</button>
+            </div>
+            <div class="col">
+                <div class="form-check" style="">
+                    <span style="padding: 0 10px"></span>
+                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck2" disabled>
+                    <label class="form-check-label" for="defaultCheck2">
+                      Face registered
+                    </label>
+                </div>
+            </div>
+            </div>
+
+          <button type="submit" value="Submit" class="btn btn-primary btn-block" style="padding: 7px 26px;">Sign up</button>
+        </form>
+        {% endif %}
     </div>
   </div>
   
   <div id="hiddenDiv">
     <video id="video" playsinline autoplay></video>
-    <button id="snap" type="submit" class="btn btn-outline-success btn-lg">Take a shoot</button>
+    <button id="snap" type="button" class="btn btn-outline-success btn-lg">Take a shoot</button>
+    <button id="retake" type="button" class="btn btn-outline-warning btn-lg" onclick="retakePic()">Retake a pic</button>
     <button id="stopButton" type="button" onclick='closeCamera()' class="btn btn-outline-danger btn-lg">Stop stream</button>
+    <button id="savePic" type="button" onclick="savePicFunc()" class="btn btn-success">Save</button>
     <a id="downloadButton" style="display: none">Download Image</a>
   </div>
 </div>
 
+<img src="" id='myImage' alt="">
 
 <canvas id="canvas" width="640" height="480" style="display:none;"></canvas>
 
