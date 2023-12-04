@@ -34,6 +34,10 @@
         {% csrf_token %}
         {%if submitted%}
           <h2>You successfully registered!</h2>
+          <a href="">
+            <button type="submit" value="Submit" class="btn btn-primary btn-block" style="padding: 7px 26px;">Sign up</button>
+
+          </a>
         {% else %}
         <form onsubmit="return checkValidData()" method="POST" action="">
           <div class="form-row">
@@ -43,7 +47,7 @@
             </div>
             <div class="form-group col-md-">
               <label for="inputPName">Password</label>
-              <input type="text" class="form-control" id="inputPName" placeholder="Ex: helloworld" name="password" required>
+              <input type="password" class="form-control" id="inputPName" placeholder="Ex: helloworld" name="password" required>
             </div>
           </div>
           <div class="form-group">
@@ -82,6 +86,9 @@
                 <option selected>1</option>
                 <option>2</option>
                 <option>3</option>
+                <option>4</option>
+                <option>5</option>
+                <option>6</option>
               </select>
             </div>
             <div class="form-group col-md-2">
@@ -118,7 +125,7 @@
         {% endif %}
     </div>
   </div>
-  
+
   <div id="hiddenDiv">
     <video id="video" playsinline autoplay></video>
     <button id="snap" type="button" class="btn btn-outline-success btn-lg">Take a shoot</button>

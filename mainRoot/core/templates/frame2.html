@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+
+</head>
+<body>
+    <div class="div-block">
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th scope="col">ID</th>
+              <th scope="col">Username</th>
+              <th scope="col">Full Name</th>
+              <th scope="col">Enroll №</th>
+              <th scope="col">Faculty</th>
+              <th scope="col">Semester</th>
+              <th scope="col">Section</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for student in students_data%}
+            <tr>
+              <th scope="row">{{ student.id }}</th>
+              <td>{{ student.username }}</td>
+              <td>{{ student.f_name }} {{ student.m_name }} {{ student.l_name }}</td>
+              <td>{{ student.enroll_number }}</td>
+              <td>{{ student.faculty }}</td>
+              <td>{{ student.semester }}</td>
+              <td>{{ student.section }}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+        <form action="{% url 'get_names' %}" method="POST">
+            {% csrf_token %}
+            <button type="submit" value="Submit" class="btn btn-success btn-block" style="padding: 7px 26px;">Get Attendance List</button>
+        </form>
+    </div>
+</body>
+</html>
